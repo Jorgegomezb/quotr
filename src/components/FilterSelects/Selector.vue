@@ -42,7 +42,6 @@ export default {
         disable: Boolean
     },
     data: () => ({
-       //
        select: "",
 
     }),
