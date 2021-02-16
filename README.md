@@ -13,7 +13,7 @@ Se nos pide hacer un frontal con varias tablas, que muestren la información que
 
 **Planificacion**
 
-![alt text]("C:\Users\JorgeGómez\Documents\Projects\quotr\Imagenes\tableroKanban.png")
+![alt text](Imagenes/tableroKanban.png)
 
 
 
