@@ -2,7 +2,7 @@
   <v-container>
     <h1 class="title_cool">QUOTR</h1>
     <v-divider></v-divider>
-    <h1 class="subtitle">A LOTR quotr</h1>
+    <h1 class="subtitle">Quotes of the ring</h1>
 </v-container>
 </template>
 <script>
