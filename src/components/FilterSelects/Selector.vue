@@ -32,7 +32,7 @@
 </template>
 <script>
 export default {
-    Name: "MonoSelection",
+    Name: "Selector",
     props:{
         options: {
             type: Array,

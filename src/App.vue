@@ -36,7 +36,7 @@
          <v-tab-item key="Home">
            <v-container fluid >
              <v-row class="pa-10" align="center" justify="center">
-                <CharacterTable 
+                <DataTable 
                   table_title="Character" 
                   :totalData="this.totalData.character" 
                   monoFilterLabel="gender"
@@ -48,7 +48,7 @@
                   @rowClicked="changeQuote"/>
               </v-row>
               <v-row  class="pa-10" align="center" justify="center" id="quotesTable" >
-                <CharacterTable  
+                <DataTable  
                   table_title="Quote"
                   :totalData="this.totalData.quote"
                   :characterName="this.selectedCharacter"
@@ -91,7 +91,7 @@
 import * as api from "./utils/APIHandler";
 import * as constants from "./utils/APIConstants";
 import PageTitle from './components/PageTitle';
-import CharacterTable from './components/CharacterTable';
+import DataTable from './components/DataTable';
 import EventDialog from "./components/EventDialog";
 
 export default {
@@ -99,12 +99,10 @@ export default {
 
   components: {
     PageTitle,
-    CharacterTable,
+    DataTable,
     EventDialog
   },
    async created() {
-    // let query= constants.CHARACTERS_ENDPOINT + constants.DEFAULT_LIMIT
-    // this.fetchData(query)
     let query= constants.MOVIES_ENDPOINT+ constants.DEFAULT_LIMIT
     let allMoviesData = await api.get(query)
     this.tablesData.movie = allMoviesData.docs
@@ -124,7 +122,6 @@ export default {
       'movie': 0,
       'quote': 0,
     },
-    //characterFilters: [], //Se deja como está, si no habría que llamar a todas!
     genderOptions: ["Male", "Female"],
     movieOptions: [],
     currentAPIPage: 0,
@@ -233,36 +230,24 @@ export default {
         this.selectedCharacter=""
         this.selectedCharacterID=""
       }
-      //let query = "limit="+ filter.options.itemsPerPage + "&page="+filter.options.page + "&"+ filter.label+ "=" + filter.value
       console.log(filters.table)
       console.log(finalQuery)
       let infoTable = await this.fetchData(finalQuery)
 
       this.tablesData[filters.table]= infoTable.docs
-      // console.log(this.tablesData)
+
       this.totalData[filters.table]= infoTable.total
       this.lastQuery=query
     },
-    // async getFilterOptions(){
-    //   let genders = []
-    //   let 
-    //   let allCharacterData =  await api.get(constants.CHARACTERS_ENDPOINT)
 
-    // },
     async fetchData(query){
       console.log("fetch")
 
       let allData =  await api.get(query)
-      // console.log(allData.total)
         return {
           "total": allData.total,
           "docs": allData.docs
         }
-      
-     
-      // this.characterData = allCharacterData.docs
-      // console.log( allCharacterData.docs)
-      // this.totalCharacters = allCharacterData.total
     }
   }
 };

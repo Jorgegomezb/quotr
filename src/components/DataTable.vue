@@ -23,10 +23,10 @@
   <template v-slot:top>
       <v-row>
           <v-col v-if="monoFilterLabel">
-              <MonoSelection :label="monoFilterLabel" ref="filter" :disable="getSelected" :multiple="false" :options="monoFilterOptions" @monofilter="updateFilter"/>
+              <Selector :label="monoFilterLabel" ref="filter" :disable="getSelected" :multiple="false" :options="monoFilterOptions" @monofilter="updateFilter"/>
           </v-col>
           <v-col v-if="multifilterLabel">
-              <MonoSelection :label="multifilterLabel" ref="filter" :multiple="true" :options="multiFilterOptions" @monofilter="updateFilter"/>
+              <Selector :label="multifilterLabel" ref="filter" :multiple="true" :options="multiFilterOptions" @monofilter="updateFilter"/>
           </v-col>
           <v-col>
               <v-select
@@ -72,21 +72,6 @@
           </template>
         </v-edit-dialog>
   </template>
-    <!-- <template v-slot:header >
-        <thead>
-              <tr align="center">
-                <th
-                  class="light-blue darken-1 white--text"
-                  v-for="(header, index) in selectedHeaders"
-                  :key="index"
-                >
-                    
-                  <v-layout justify-center>
-                      <button @click="headerClick(header.text)">{{ header.text }}</button></v-layout>
-                </th>
-              </tr>
-            </thead>
-            </template> -->
     <template v-slot:[`item.actions`]="{ item }">
         <EventDialog/>
       <v-icon
@@ -107,12 +92,12 @@
 </v-card>
 </template>
 <script>
-import MonoSelection from "./FilterSelects/MonoSelect";
+import Selector from "./FilterSelects/Selector";
 import EventDialog from "./EventDialog";
 export default {
-    Name: "CharacterTable",
+    Name: "DataTable",
     components:{
-        MonoSelection,
+        Selector,
         EventDialog
     },
     props:{
@@ -140,7 +125,6 @@ export default {
     watch:{
         options: {
         handler () {
-            //console.log(JSON.stringify(this.table_data))
             console.log("optionwatcher")
             let filter= {
                 'filters': this.total_filters,
@@ -148,36 +132,19 @@ export default {
                 'table': this.table_title.toLowerCase()
             }
             this.$emit("monoFilter", filter)
-            // this.$emit('changePage', this.options)
-            // this.isLoading=true
         },
         deep: true,
       },
         characterData(data_recieved) {
             console.log("changed data")
-            //console.log(JSON.stringify(raw_data, null, 2))
-            //this.headers = Object.keys(raw_data[0])
+
             this.table_data = JSON.parse(JSON.stringify(data_recieved));
-            // console.log(JSON.stringify(this.table_data))
+
             this.selectedHeaders= this.headers
             this.isLoading = false
-            //this.totalData = this.table_data.length
-            // this.data_backup = JSON.parse(JSON.stringify(raw_data));
-            // this.loadingTable = false;
         }
     },
     computed:{
-        // monoFilterOptions(){
-        //     let filterOptions=[]
-        //     console.log("monofiulter")
-        //     var label = this.$props.monoFilterLabel
-        //     this.table_data.map(function(row){
-        //         if(!filterOptions.includes(row[label])){
-        //             filterOptions.push(row[label])
-        //         }
-        //     })
-        //     return filterOptions
-        // },
         getSelected(){
             if(this.selectedCharacter != ""){
                 return true
@@ -288,7 +255,6 @@ export default {
         },
         updatePage(page){
             console.log(page)
-            //this.$emit('changePage', page)
         },
         headerClick(header){
             //To do: resizable headers
@@ -310,41 +276,5 @@ export default {
 /* This is added to prevent the unalignment of headers in small screens*/
 .v-data-table-header th {
   white-space: nowrap;
-}
-</style>
-<style lang="scss">
-.table-resizable {
-	&.resizing {
-		cursor: col-resize;
-		user-select: none;
-	}
-	
-	th {
-		position: relative;
-
-		// Show resize curson when hovering over column borders
-		&::before {
-			@extend .table-resizable, .resizing;
-			content: '';
-			display: block;
-			height: 100%;
-			position: absolute;
-			right: 0;
-			top: 0;
-			width: 1em;
-		}
-
-		&:last-of-type::before {
-			display: none;
-		}
-	}
-
-	// Add `th` to the selector below to allow shrinking a column all the way
-	td {
-		max-width: 0;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-	}
 }
 </style>
