@@ -2,7 +2,7 @@ module.exports = {
 //API Constants
 API_URL:"https://the-one-api.dev/v2/",
 API_AUTH: {
-    "Authorization": "Bearer 5sFdVsucJS_Bu2Ltq2SY"
+    "Authorization": "Bearer XXX"
   },
 
 //endpoints
